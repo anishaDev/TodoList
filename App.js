@@ -97,7 +97,7 @@ export default function App() {
           width: "20%",
           fontSize: 18,
           borderColor: "gray",
-          borderWidth: 0.2,
+          borderWidth: 0.5,
           padding: 12,
         }}
         placeholder="type here"
