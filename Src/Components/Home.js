@@ -7,18 +7,25 @@ import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import { doc, querySnapshot } from 'firebase/firestore';
+import { DataTable } from 'react-native-paper';
+import TableExample from './Datatable';
 
 
 const Home = () => {
 const [todos, setTodos] = useState([]);
 const todoRef = firebase.firestore().collection('todos');
+
+
 const [addData, setAddData] = useState(' ');
+const {currentUser} = useContext(AuthContext)
+const currentUserId = currentUserId ? currentUser.uid : null
 const navigation = useNavigation();
 
 
 //fetch or read data from the database
 useEffect(() => {
   todoRef
+  .where("heading", "==", currentUserId)
   .orderBy('createdAt', 'desc')
   .onSnapshot(
     querySnapshot => {
@@ -28,6 +35,7 @@ useEffect(() => {
             todos.push({
                 id: doc.id,
                 heading,
+                
             })
         })
         setTodos(todos)
@@ -109,16 +117,17 @@ return (
                 style={styles.todoIcon}
                 
                 />
-               
+                  <TouchableOpacity onPress={() => navigation.navigate('Detail', {item})}>
+                <AntDesign name="edit" size={24} color="black" />
+                </TouchableOpacity>
+             {/* <TableExample/> */}
                 <View style={styles.innerContainer}>
                     <Text style={styles.itemHeading}>
                         {item.heading[0].toUpperCase()+ item.heading.slice(1)}
 
                     </Text>
                 </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Detail', {item})}>
-                <AntDesign name="edit" size={24} color="black" />
-                </TouchableOpacity>
+              
             </Pressable>
 
         </View>
@@ -135,7 +144,7 @@ export default Home
 
 const styles = StyleSheet.create({
 container:{
-    backgroundColor:'#e5e5e5',
+    backgroundColor:'#e4e4e4',
     padding:15,
     borderRadius:15,
     margin:5,
