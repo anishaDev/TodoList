@@ -14,26 +14,24 @@ import Fetch, { AddToOrganization } from "./Src/Components/getdata";
 const Stack = createStackNavigator();
 
 export default function App() {
-  
+
   return (
-    <View style={styles.container}>
-    <Fetch/>
-    </View>
-    // <NavigationContainer>
-    //   <Stack.Navigator screenOptions={{headerShown:false}}>
-    //     <Stack.Screen 
-    //     name="Home"
-    //     component={Home}
+   
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown:false}}>
+        <Stack.Screen 
+        name="Home"
+        component={Home}
         
-    //     />
-    //      <Stack.Screen 
-    //     name="Detail"
-    //     component={Detail}
+        />
+         <Stack.Screen 
+        name="Detail"
+        component={Detail}
         
-    //     />
+        />
       
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

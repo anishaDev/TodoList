@@ -6,28 +6,46 @@ import {firebase} from './Config'
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
-import { doc, querySnapshot } from 'firebase/firestore';
+// import { doc, querySnapshot } from 'firebase/firestore';
 import { DataTable } from 'react-native-paper';
 import TableExample from './Datatable';
+import { collection, doc, setDoc,onSnapshot } from "firebase/firestore"; 
 
 
 const Home = () => {
 const [todos, setTodos] = useState([]);
 const todoRef = firebase.firestore().collection('todos');
 
+//queries
+// const q = query(todoRef,where('heading','==', 'guava'))
+//real time collection data
+// onSnapshot(q, (snapshot) => {
+//     let todos = []
+//     snapshot.docs.forEach((doc) => {
+//         todos.push({ ...doc.data(), id: doc.id})
+//     })
+//     console.log(todos)
+// })
+
+
 
 const [addData, setAddData] = useState(' ');
-const {currentUser} = useContext(AuthContext)
-const currentUserId = currentUserId ? currentUser.uid : null
+
 const navigation = useNavigation();
+
+
+
 
 
 //fetch or read data from the database
 useEffect(() => {
   todoRef
-  .where("heading", "==", currentUserId)
+//   .where('heading', 'in', ['orange', 'apple'])
+//   .get()
+
   .orderBy('createdAt', 'desc')
   .onSnapshot(
+    
     querySnapshot => {
         const todos = []
         querySnapshot.forEach((doc) => {
@@ -35,8 +53,10 @@ useEffect(() => {
             todos.push({
                 id: doc.id,
                 heading,
+               
                 
             })
+            console.log(heading)
         })
         setTodos(todos)
     }
@@ -64,7 +84,8 @@ const addTodo =() =>{
         const timestamp = firebase.firestore.FieldValue.serverTimestamp();
         const data ={
             heading : addData,
-            createdAt : timestamp
+            createdAt : timestamp,
+            
         };
         todoRef
         .add(data)
