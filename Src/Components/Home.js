@@ -6,10 +6,7 @@ import {firebase} from './Config'
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
-// import { doc, querySnapshot } from 'firebase/firestore';
-import { DataTable } from 'react-native-paper';
-import TableExample from './Datatable';
-import { collection, doc, setDoc,onSnapshot } from "firebase/firestore"; 
+
 
 
 const Home = () => {
@@ -38,12 +35,21 @@ const navigation = useNavigation();
 
 
 //fetch or read data from the database
-useEffect(() => {
-  todoRef
+
 //   .where('heading', 'in', ['orange', 'apple'])
 //   .get()
-
+// .where('name', 'in', ['anisha', 'garima'])
+//     .get()
+    // .then(querySnapshot => {
+    //     console.log('Total no: ', querySnapshot.size);
+  
+    //     querySnapshot.forEach(documentSnapshot => {
+    //       console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
+    //     })
+    useEffect(() => {
+        todoRef
   .orderBy('createdAt', 'desc')
+  
   .onSnapshot(
     
     querySnapshot => {
@@ -157,11 +163,11 @@ return (
     />
 </View>
 
-)
+);
   
 }
 
-export default Home
+export default Home;
 
 const styles = StyleSheet.create({
 container:{

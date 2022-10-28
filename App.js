@@ -10,28 +10,31 @@ import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import App1 from "./Src/Components/Table";
 import Fetch, { AddToOrganization } from "./Src/Components/getdata";
+import Marktable from "./Src/Components/Marks";
 
 const Stack = createStackNavigator();
 
 export default function App() {
 
   return (
-   
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen 
-        name="Home"
-        component={Home}
+   <View>
+    <Fetch/>
+   </View>
+    // <NavigationContainer>
+    //   <Stack.Navigator screenOptions={{headerShown:false}}>
+    //     <Stack.Screen 
+    //     name="Home"
+    //     component={Home}
         
-        />
-         <Stack.Screen 
-        name="Detail"
-        component={Detail}
+    //     />
+    //      <Stack.Screen 
+    //     name="Detail"
+    //     component={Detail}
         
-        />
+    //     />
       
-      </Stack.Navigator>
-    </NavigationContainer>
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
 

@@ -14,22 +14,27 @@ import { firebase } from "./Config";
 
 const Fetch = () => {
   const [users, setUsers] = useState([]);
-  // const {currentUser} = useContext(AuthContext)
-// const currentUserId = currentUserId ? currentUser.uid : null
-  const todoRef = firebase.firestore().collection("todos");
  
+  const todoRef = firebase.firestore().collection("schools");
+  // let query = firebase.firestore().collection('schools').where('title', '==', title);
+  // if (filter === 'complete') {
+  //   query = query.where('status', '==', 'pending');
+  // }
 
   useEffect(async () => {
     todoRef
-    // .where("heading", "==", currentUserId)
+  
     .onSnapshot((querySnapshot) => {
       const users = [];
       querySnapshot.forEach((doc) => {
-        const { heading, text } = doc.data();
+        const { title, mark1,mark2,totalmarks,desc } = doc.data();
         users.push({
           id: doc.id,
-          heading,
-          text,
+          title,
+          mark1,
+          mark2,
+          totalmarks,
+          desc
           
         });
       });
@@ -70,8 +75,11 @@ const Fetch = () => {
         renderItem={({ item }) => (
           <Pressable>
             <View style={styles.innerContainer}>
-              <Text style={styles.itemHeading}>{item.heading}</Text>
-              <Text style={styles.itemText}>{item.text}</Text>
+              <Text style={styles.itemHeading}>{item.title}</Text>
+              <Text style={styles.itemText}>{item.mark1}</Text>
+              <Text style={styles.itemText}>{item.mark2}</Text>
+              <Text style={styles.itemText}>{item.totalmarks}</Text>
+              <Text style={styles.itemText}>{item.desc}</Text>
             </View>
           </Pressable>
         )}
@@ -88,7 +96,8 @@ const styles = StyleSheet.create({
         margin:5,
         marginHorizontal:5,
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        borderRadius:10
     },
     innerContainer:{
         alignItems:'center',
