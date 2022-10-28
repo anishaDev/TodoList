@@ -23,7 +23,7 @@ const Fetch = () => {
 
   useEffect(async () => {
     todoRef
-  
+    .orderBy('totalmarks', 'desc')
     .onSnapshot((querySnapshot) => {
       const users = [];
       querySnapshot.forEach((doc) => {
