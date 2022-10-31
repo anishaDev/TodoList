@@ -14,58 +14,89 @@ import { firebase } from "./Config";
 
 const Fetch = () => {
   const [users, setUsers] = useState([]);
- 
+
+
+  
+
+
+
+
+
+
+
   const todoRef = firebase.firestore().collection("schools");
-  // let query = firebase.firestore().collection('schools').where('title', '==', title);
-  // if (filter === 'complete') {
-  //   query = query.where('status', '==', 'pending');
-  // }
+
+  // todoRef.onSnapshot((querySnapshot) => {
+  //   let monthNumber = 0;
+  //   let array = [];
+  //   [
+  //     { month: 1, servicecost: 15 },
+  //     { month: 1, servicecost: 15 },
+  //     { month: 1, servicecost: 15 },
+  //     { month: 2, servicecost: 15 },
+  //     { month: 3, servicecost: 15 },
+  //   ].forEach((doc) => {
+  //     monthNumber = parseInt(doc.month, 10);
+  //     servicecostTotal = servicecostTotal + parseInt(doc.servicecost, 10  );
+  //     array[monthNumber -1] = (array[monthNumber -1] || 0) + servicecostTotal;
+  //     servicecostTotal = 0;
+  //     const { servicecostTotal } = doc.data();
+  //     array.push({
+  //       id: doc.id,
+  //       servicecostTotal
+
+  //     })
+  //   });
+  //   console.log(array)
+
+  // })
 
   useEffect(async () => {
     todoRef
-    .orderBy('totalmarks', 'desc')
-    .onSnapshot((querySnapshot) => {
-      const users = [];
-      querySnapshot.forEach((doc) => {
-        const { title, mark1,mark2,totalmarks,desc } = doc.data();
-        users.push({
-          id: doc.id,
-          title,
-          mark1,
-          mark2,
-          totalmarks,
-          desc
-          
+      .where('totalmarks', '<=', 356)
+      .orderBy("totalmarks", "desc")
+
+      .onSnapshot((querySnapshot) => {
+        const users = [];
+
+        querySnapshot.forEach((doc) => {
+          const { title, mark1, mark2, totalmarks, desc } = doc.data();
+          users.push({
+            id: doc.id,
+            title,
+            mark1,
+            mark2,
+            totalmarks,
+            desc,
+          });
         });
+        setUsers(users);
       });
-      setUsers(users);
-    });
   }, []);
 
+  //   const getdata =() =>{
+  //     //check if we have a todo
+  //     if (addData && addData.length > 0) {
+  //         //get the timestamp
+  //         const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+  //         const data ={
+  //             heading : addData,
+  //             createdAt : timestamp
+  //         };
+  //         todoRef
+  //         .add(data)
+  //         .then (() => {
+  //             setAddData(' ');
+  //             //release keyboard
+  //             Keyboard.dismiss();
+  //         })
+  //         .catch(error => {
+  //             alert(error + "something went wrong")
+  //         })
 
-  const getdata =() =>{
-    //check if we have a todo
-    if (addData && addData.length > 0) {
-        //get the timestamp
-        const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-        const data ={
-            heading : addData,
-            createdAt : timestamp
-        };
-        todoRef
-        .add(data)
-        .then (() => {
-            setAddData(' ');
-            //release keyboard
-            Keyboard.dismiss();
-        })
-        .catch(error => {
-            alert(error + "something went wrong")
-        })
-    
+  // }
+  // }
 
-}
-}
   return (
     <View style={{ flex: 1, marginTop: 100 }}>
       <FlatList
@@ -89,37 +120,29 @@ const Fetch = () => {
 };
 export default Fetch;
 const styles = StyleSheet.create({
-    container:{
-        backgroundColor:'#e4e4e4',
-        padding:15,
-        borderRadius:15,
-        margin:5,
-        marginHorizontal:5,
-        flexDirection:'row',
-        alignItems:'center',
-        borderRadius:10
-    },
-    innerContainer:{
-        alignItems:'center',
-        flexDirection:'column',
-        marginLeft:45,
-    
-    },
-    itemHeading:{
-        fontWeight:'bold',
-        fontSize:18,
-        marginRight:22,
-    },
-    itemText:{
-        fontWeight:'bold',
-        fontSize:18,
-        marginRight:22,
-    },
-    
-  
-  
-    
-    
-    
-    
-    })
+  container: {
+    backgroundColor: "#e4e4e4",
+    padding: 15,
+    borderRadius: 15,
+    margin: 5,
+    marginHorizontal: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  innerContainer: {
+    alignItems: "center",
+    flexDirection: "column",
+    marginLeft: 45,
+  },
+  itemHeading: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginRight: 22,
+  },
+  itemText: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginRight: 22,
+  },
+});

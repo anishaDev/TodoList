@@ -11,6 +11,8 @@ import { useState } from "react";
 import App1 from "./Src/Components/Table";
 import Fetch, { AddToOrganization } from "./Src/Components/getdata";
 import Marktable from "./Src/Components/Marks";
+// import { DataTable } from "react-native-paper";
+import Datatable from "./Src/Components/Datatable";
 
 const Stack = createStackNavigator();
 
@@ -18,7 +20,7 @@ export default function App() {
 
   return (
    <View>
-    <Fetch/>
+    <Datatable/>
    </View>
     // <NavigationContainer>
     //   <Stack.Navigator screenOptions={{headerShown:false}}>
