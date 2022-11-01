@@ -20,7 +20,7 @@ export default function App() {
 
   return (
    <View>
-    <Datatable/>
+    <Fetch/>
    </View>
     // <NavigationContainer>
     //   <Stack.Navigator screenOptions={{headerShown:false}}>

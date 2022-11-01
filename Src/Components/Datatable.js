@@ -1,7 +1,3 @@
-
-
-                            
-
 import {
   View,
   Text,
@@ -12,23 +8,34 @@ import {
   Keyboard,
   Pressable,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
+import firestore from "@react-native-firebase/firestore";
 
 import { firebase } from "./Config";
 
 const Datatable = () => {
   const [users, setUsers] = useState([]);
 
+  // firebase
+  //   .firestore()
+  //   .collection("schools")
 
-  
+  // .get()
+  // .then((querySnapshot) => {
+  //     let serviceCostTotal = 0; //Will hold currentMonth Total Income.
+  //     let monthNumber = 0;
+  //     let array = [];
+  //     querySnapshot.forEach((doc) => {
+  //       monthNumber = parseInt(doc.data().id, 1);
+  //       serviceCostTotal =
+  //         serviceCostTotal + parseInt(doc.data().mark1, 1); //Calculate Total Month income using this formula
+  //       array[monthNumber - 1] = serviceCostTotal; //Push the income of month X to array in X place
+  //       serviceCostTotal = 0; // after pushing, initialize the sum to 0
+  //     });
 
+  //   })
 
-
-
-
-
-
-  const todoRef = firebase.firestore().collection("schools");
+  const todoRef = firebase.firestore().collection("Mycollection");
 
   // todoRef.onSnapshot((querySnapshot) => {
   //   let monthNumber = 0;
@@ -56,33 +63,43 @@ const Datatable = () => {
   // })
 
   useEffect(async () => {
-    todoRef
-      // .where('totalmarks', '<=', 356)
-      .orderBy("totalmarks", "desc")
+    todoRef.onSnapshot((querySnapshot) => {
+      console.log("total serviceid:", querySnapshot.size);
+      // let monthNumber = 0;
+    
+      const users = [];
 
-      .onSnapshot((querySnapshot) => {
-        console.log('total students:' , querySnapshot.size)
-        const users = [];
+      [
+        { id:1,month: 10, serviceCost: 1500 },
+        {id:2, month: 10, serviceCost: 1500 },
+        { id:3,month: 11, serviceCost: 1000 },
+       
+        
+      ].forEach((doc) => {
+      const  monthNumber = parseInt(doc.month);
+        
+     let  servicecostTotal =0;
+        servicecostTotal + parseInt(doc.serviceCost);
+        users[servicecostTotal] = (users[servicecostTotal] || 0)+ parseInt(doc.serviceCost)/3
 
-        querySnapshot.forEach((doc) => {
-          console.log('User ID:' , doc.id, doc.data());
-          sum=mark1+mark2;
-          averagemark=sum/4
-          const { title, mark1, mark2, totalmarks, desc,sum,averagemark } = doc.data();
-          users.push({
-            id: doc.id,
-            title,
-            mark1,
-            mark2,
-            totalmarks,
-            desc,
-            sum,
-            averagemark
+      //  console.log(servicecostTotal);
+      console.log(users)
+        // users[monthNumber - 1] = (users[monthNumber - 1] || 0) + parseInt(doc.serviceCost)/3
+      
+       
+        // serviceCostTotal=serviceCostTotal+parsInt(doc.serviceCost,10)
+       
 
-          });
+        const { month, serviceCost, serviceType } = doc;
+        users.push({
+          id: doc.id,
+          month,
+          serviceCost,
+          serviceType,
         });
-        setUsers(users);
       });
+      setUsers(users);
+    });
   }, []);
 
   //   const getdata =() =>{
@@ -117,9 +134,9 @@ const Datatable = () => {
         renderItem={({ item }) => (
           <Pressable>
             <View style={styles.innerContainer}>
-              <Text style={styles.itemHeading}>{item.title}</Text>
-              <Text style={styles.itemText}>{item.mark1}</Text>
-              <Text style={styles.itemText}>{item.mark2}</Text>
+              <Text style={styles.itemHeading}>{item.month}</Text>
+              <Text style={styles.itemText}>{item.serviceCost}</Text>
+              <Text style={styles.itemText}>{item.serviceType}</Text>
               <Text style={styles.itemText}>{item.totalmarks}</Text>
               <Text style={styles.itemText}>{item.desc}</Text>
               <Text style={styles.itemText}>{item.sum}</Text>
@@ -132,7 +149,6 @@ const Datatable = () => {
   );
 };
 export default Datatable;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -161,7 +177,3 @@ const styles = StyleSheet.create({
     marginRight: 22,
   },
 });
-
-
-
-

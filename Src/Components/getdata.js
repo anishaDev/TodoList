@@ -53,14 +53,29 @@ const Fetch = () => {
 
   useEffect(async () => {
     todoRef
-      .where('totalmarks', '<=', 356)
-      .orderBy("totalmarks", "desc")
+      // .where('totalmarks', '<=', 356)
+      // .orderBy("totalmarks", "desc")
 
       .onSnapshot((querySnapshot) => {
+        console.log("total average:", querySnapshot.size);
         const users = [];
+        [
+          { id:1,mark1: 9, totalmarks: 150,TotalMark:600 },
+          {id:2, mark1: 9, totalmarks: 150,TotalMark:600 },
+          { id:3,mark1: 9, totalmarks: 150,TotalMark:600},
+          { id:3,mark1: 10, totalmarks: 150,TotalMark:600 },
+          
+          
+        ].forEach((doc) => {
+          const marksNumber = parseInt(doc.mark1);
+          let totalmarkSum = 0;
+          totalmarkSum + parseInt(doc.totalmarks)
+          console.log(users)
+          users[totalmarkSum ] = (users[totalmarkSum ] || 0) + parseInt(doc.totalmarks)/4
 
-        querySnapshot.forEach((doc) => {
-          const { title, mark1, mark2, totalmarks, desc } = doc.data();
+
+        
+          const { title, mark1, mark2, totalmarks, desc,TotalMark } = doc;
           users.push({
             id: doc.id,
             title,
@@ -68,6 +83,7 @@ const Fetch = () => {
             mark2,
             totalmarks,
             desc,
+            TotalMark
           });
         });
         setUsers(users);
@@ -110,7 +126,7 @@ const Fetch = () => {
               <Text style={styles.itemText}>{item.mark1}</Text>
               <Text style={styles.itemText}>{item.mark2}</Text>
               <Text style={styles.itemText}>{item.totalmarks}</Text>
-              <Text style={styles.itemText}>{item.desc}</Text>
+              <Text style={styles.itemText}>{item.TotalMark}</Text>
             </View>
           </Pressable>
         )}
