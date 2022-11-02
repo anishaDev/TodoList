@@ -60,10 +60,10 @@ const Fetch = () => {
         console.log("total average:", querySnapshot.size);
         const users = [];
         [
-          { id:1,mark1: 9, totalmarks: 150,TotalMark:600 },
-          {id:2, mark1: 9, totalmarks: 150,TotalMark:600 },
-          { id:3,mark1: 9, totalmarks: 150,TotalMark:600},
-          { id:3,mark1: 10, totalmarks: 150,TotalMark:600 },
+          { id:1,mark1: 9, totalmarks: 150,TotalMark:150 },
+          {id:2, mark1: 9, totalmarks: 150 },
+          { id:3,mark1: 9, totalmarks: 150},
+          { id:3,mark1: 10, totalmarks: 150 },
           
           
         ].forEach((doc) => {
@@ -72,6 +72,7 @@ const Fetch = () => {
           totalmarkSum + parseInt(doc.totalmarks)
           console.log(users)
           users[totalmarkSum ] = (users[totalmarkSum ] || 0) + parseInt(doc.totalmarks)/4
+         
 
 
         
@@ -122,11 +123,11 @@ const Fetch = () => {
         renderItem={({ item }) => (
           <Pressable>
             <View style={styles.innerContainer}>
-              <Text style={styles.itemHeading}>{item.title}</Text>
-              <Text style={styles.itemText}>{item.mark1}</Text>
-              <Text style={styles.itemText}>{item.mark2}</Text>
-              <Text style={styles.itemText}>{item.totalmarks}</Text>
-              <Text style={styles.itemText}>{item.TotalMark}</Text>
+              {/* <Text style={styles.itemHeading}>{item.title}</Text> */}
+              {/* <Text style={styles.itemText}>{item.mark1}</Text> */}
+              {/* <Text style={styles.itemText}>{item.mark2}</Text> */}
+              {/* <Text style={styles.itemText}>{item.totalmarks}</Text> */}
+              <Text style={styles.itemText}>{item.totalmarkSum}</Text>
             </View>
           </Pressable>
         )}

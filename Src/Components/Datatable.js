@@ -81,6 +81,11 @@ const Datatable = () => {
      let  servicecostTotal =0;
         servicecostTotal + parseInt(doc.serviceCost);
         users[servicecostTotal] = (users[servicecostTotal] || 0)+ parseInt(doc.serviceCost)/3
+        if (condition) {
+          
+        } else {
+          
+        }
 
       //  console.log(servicecostTotal);
       console.log(users)
